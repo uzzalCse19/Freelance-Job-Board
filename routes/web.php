@@ -6,7 +6,7 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('jobs.index');
 });
 
 Route::get('/dashboard', function () {

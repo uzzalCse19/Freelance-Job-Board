@@ -1,30 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="text-xl mb-4">Login</h1>
+    <div class="max-w-md mx-auto">
+        <h1 class="text-2xl font-semibold mb-4">Sign in to your account</h1>
 
-    @if($errors->any())
-        <div class="mb-4 text-red-600">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+        <form method="POST" action="{{ url('login') }}" class="space-y-4">
+            @csrf
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Email</label>
+                <input name="email" type="email" class="mt-1 block w-full rounded border-gray-200 shadow-sm" required autofocus>
+            </div>
 
-    <form method="POST" action="{{ url('login') }}">
-        @csrf
-        <div class="mb-3">
-            <label class="block mb-1">Email</label>
-            <input name="email" type="email" class="w-full border p-2" required autofocus>
-        </div>
-        <div class="mb-3">
-            <label class="block mb-1">Password</label>
-            <input name="password" type="password" class="w-full border p-2" required>
-        </div>
-        <div class="mt-3">
-            <button class="px-4 py-2 bg-blue-600 text-white rounded">Login</button>
-        </div>
-    </form>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Password</label>
+                <input name="password" type="password" class="mt-1 block w-full rounded border-gray-200 shadow-sm" required>
+            </div>
+
+            <div>
+                <button class="w-full px-4 py-2 bg-indigo-600 text-white rounded">Login</button>
+            </div>
+        </form>
+    </div>
 @endsection

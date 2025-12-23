@@ -1,3 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Freelance Job Board</title>
+    <meta name="description" content="Simple freelance job board">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="antialiased bg-gray-50 text-gray-800">
+  <header class="bg-white shadow">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <h1 class="text-2xl font-bold">Freelance Job Board</h1>
+      <nav class="space-x-4">
+        @auth
+          <a href="{{ route('dashboard') }}" class="text-sm text-indigo-600 hover:underline">Dashboard</a>
+          <form method="POST" action="{{ route('logout') }}" class="inline">
+            @csrf
+            <button type="submit" class="text-sm text-gray-600 hover:underline">Logout</button>
+          </form>
+        @else
+          <a href="{{ route('login') }}" class="text-sm text-gray-600 hover:underline">Login</a>
+          <a href="{{ route('register') }}" class="text-sm text-indigo-600 hover:underline">Register</a>
+        @endauth
+      </nav>
+    </div>
+  </header>
+
+  <main class="mt-12">
+    <div class="max-w-4xl mx-auto text-center px-4">
+      <h2 class="text-4xl font-extrabold text-gray-900">Find or post freelance jobs quickly</h2>
+      <p class="mt-4 text-gray-600">A minimal job board to list short-term freelance work and discover talent.</p>
+
+      <div class="mt-8 flex justify-center space-x-4">
+        <a href="{{ route('jobs.index') }}" class="px-6 py-3 bg-indigo-600 text-white rounded-md shadow hover:bg-indigo-700">Browse Jobs</a>
+        @guest
+        <a href="{{ route('register') }}" class="px-6 py-3 border border-indigo-600 text-indigo-600 rounded-md hover:bg-indigo-50">Create Account</a>
+        @else
+        <a href="{{ route('jobs.create') }}" class="px-6 py-3 border border-indigo-600 text-indigo-600 rounded-md hover:bg-indigo-50">Post a Job</a>
+        @endguest
+      </div>
+
+      <section class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="p-6 bg-white rounded-lg shadow">
+          <h3 class="font-semibold">Simple Posting</h3>
+          <p class="mt-2 text-sm text-gray-600">Post jobs with budget and deadline in a few steps.</p>
+        </div>
+        <div class="p-6 bg-white rounded-lg shadow">
+          <h3 class="font-semibold">Comments</h3>
+          <p class="mt-2 text-sm text-gray-600">Discuss job details via comments on jobs or profiles.</p>
+        </div>
+        <div class="p-6 bg-white rounded-lg shadow">
+          <h3 class="font-semibold">Secure</h3>
+          <p class="mt-2 text-sm text-gray-600">Authentication protects posting and profile features.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="mt-16 py-8 bg-white border-t">
+    <div class="max-w-7xl mx-auto text-center text-sm text-gray-500">© {{ date('Y') }} Freelance Job Board</div>
+  </footer>
+</body>
+</html>
+@extends('layouts.app')
+
+@section('content')
+    <section class="text-center py-16">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-4xl font-extrabold text-gray-900 leading-tight">Find great freelance work — or hire trusted talent</h2>
+            <p class="mt-4 text-gray-600">Post projects, review proposals, and manage contracts in one simple place built for independent professionals.</p>
+
+            <div class="mt-8 flex justify-center gap-4">
+                <a href="{{ route('register') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700">Get Started</a>
+                <a href="{{ route('jobs.index') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-lg shadow hover:bg-gray-50">Browse Jobs</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded shadow text-left">
+                <h3 class="font-semibold text-lg">Post a Job</h3>
+                <p class="mt-2 text-sm text-gray-600">Create a detailed job post and receive proposals from qualified freelancers.</p>
+            </div>
+            <div class="bg-white p-6 rounded shadow text-left">
+                <h3 class="font-semibold text-lg">Manage Proposals</h3>
+                <p class="mt-2 text-sm text-gray-600">Compare bids, message candidates, and hire with confidence.</p>
+            </div>
+            <div class="bg-white p-6 rounded shadow text-left">
+                <h3 class="font-semibold text-lg">Safe Payments</h3>
+                <p class="mt-2 text-sm text-gray-600">Use secure payment flows and milestone tracking to protect both sides.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="bg-gradient-to-r from-indigo-50 to-white p-8 rounded-lg">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold">Why choose Freelance Job Board?</h3>
+                    <ul class="mt-4 text-gray-600 space-y-2">
+                        <li>• Curated freelancers with verified profiles</li>
+                        <li>• Transparent pricing and proposals</li>
+                        <li>• Easy project and milestone tracking</li>
+                    </ul>
+                </div>
+                <div class="md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=900&auto=format&fit=crop&ixlib=rb-4.0.3&s=0f0a04c1b2c4d9e6e8b5d7f2a2c3f1a4" alt="Teamwork" class="rounded shadow w-full">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <h3 class="text-xl font-semibold text-center">Trusted by professionals</h3>
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center text-sm text-gray-600">
+            <div class="bg-white p-4 rounded shadow">"Great candidates and clear proposals." — Acme Co.</div>
+            <div class="bg-white p-4 rounded shadow">"Saved us time hiring contractors." — Studio X</div>
+            <div class="bg-white p-4 rounded shadow">"Reliable escrow payments." — DevHouse</div>
+        </div>
+    </section>
+
+    <section class="py-12 text-center">
+        <p class="text-sm text-gray-500">Ready to get started? Create an account and post your first job.</p>
+        <div class="mt-4">
+            <a href="{{ route('register') }}" class="inline-flex items-center gap-2 px-5 py-2 bg-green-600 text-white rounded">Create Free Account</a>
+        </div>
+    </section>
+
+@endsection
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
