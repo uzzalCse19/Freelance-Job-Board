@@ -25,6 +25,7 @@ Route::get('/my-profile', function () {
 
 Route::middleware(['auth', \App\Http\Middleware\EnsureProfileIsComplete::class])->group(function () {
     Route::resource('jobs', JobController::class)->except(['show']);
+    Route::post('jobs/{job}/comments', [JobController::class, 'storeComment'])->name('jobs.comments.store');
 });
 
 Route::get('/high-value-jobs', [JobController::class, 'highValue']);
