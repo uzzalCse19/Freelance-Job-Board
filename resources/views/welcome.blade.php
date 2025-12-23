@@ -6,6 +6,8 @@
     <title>Freelance Job Board</title>
     <meta name="description" content="Simple freelance job board">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }</style>
 </head>
 <body class="antialiased bg-gray-50 text-gray-800">
   <header class="bg-white shadow">
@@ -19,7 +21,7 @@
             <button type="submit" class="text-sm text-gray-600 hover:underline">Logout</button>
           </form>
         @else
-          <a href="{{ route('login') }}" class="text-sm text-gray-600 hover:underline">Login</a>
+          <a href="{{ route('login') }}" class="text-sm text-gray-600 hover:underline open-login">Login</a>
           <a href="{{ route('register') }}" class="text-sm text-indigo-600 hover:underline">Register</a>
         @endauth
       </nav>
@@ -105,6 +107,63 @@
                         <li>• Easy project and milestone tracking</li>
                     </ul>
                 </div>
+            </main>
+        </div>
+
+        <script>
+            (function(){
+                function openModal() {
+                    document.getElementById('loginModal').classList.remove('hidden');
+                }
+                function closeModal() {
+                    document.getElementById('loginModal').classList.add('hidden');
+                }
+
+                // Attach to links with class 'open-login'
+                document.querySelectorAll('a.open-login').forEach(function(a){
+                    a.addEventListener('click', function(ev){
+                        // If user has JS, prevent default navigation and show modal
+                        ev.preventDefault();
+                        openModal();
+                    });
+                });
+
+                var closeBtn = document.getElementById('loginClose');
+                if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+                // Close when clicking outside the modal content
+                var modal = document.getElementById('loginModal');
+                if (modal) modal.addEventListener('click', function(e){
+                    if (e.target === modal) closeModal();
+                });
+            })();
+        </script>
+                <!-- Login Modal -->
+                <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg w-full max-w-md p-6 shadow-lg">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold">Sign in to your account</h3>
+                            <button id="loginClose" class="text-gray-500 hover:text-gray-700">✕</button>
+                        </div>
+
+                        <form method="POST" action="{{ route('login') }}" class="space-y-4">
+                            @csrf
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Email</label>
+                                <input name="email" type="email" class="mt-1 block w-full rounded border-gray-200 shadow-sm" required autofocus>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Password</label>
+                                <input name="password" type="password" class="mt-1 block w-full rounded border-gray-200 shadow-sm" required>
+                            </div>
+
+                            <div>
+                                <button class="w-full px-4 py-2 bg-indigo-600 text-white rounded">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="md:w-1/2">
                     <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=900&auto=format&fit=crop&ixlib=rb-4.0.3&s=0f0a04c1b2c4d9e6e8b5d7f2a2c3f1a4" alt="Teamwork" class="rounded shadow w-full">
                 </div>
@@ -164,7 +223,7 @@
                     @else
                         <a
                             href="{{ route('login') }}"
-                            class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal"
+                            class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal open-login"
                         >
                             Log in
                         </a>

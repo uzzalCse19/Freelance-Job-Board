@@ -18,6 +18,11 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
+// Convenience name used by some auth/navigation stubs: keep a `profile` named route
+Route::get('/my-profile', function () {
+    return redirect()->route('profile.edit');
+})->name('profile');
+
 Route::middleware(['auth', \App\Http\Middleware\EnsureProfileIsComplete::class])->group(function () {
     Route::resource('jobs', JobController::class)->except(['show']);
 });
